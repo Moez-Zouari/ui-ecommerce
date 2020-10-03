@@ -13,11 +13,11 @@
                                         <div class="product-box">
 
                                                 <a routerLink="/products/{{ tempProduct.id }}">
-                                                         <img src="{{ tempProduct.imageUrl}}" class="img-responsive">
+                                                        <img src="{{ tempProduct.imageUrl}}" class="img-responsive">
                                                 </a>
 
                                                 <a routerLink="/products/{{ tempProduct.id }}">
-                                                         <h1> {{ tempProduct.name}}</h1>
+                                                        <h1> {{ tempProduct.name}}</h1>
                                                 </a>
 
 
@@ -32,6 +32,26 @@
                                 <div *ngIf="products?.length == 0" class="alert alert-warning col-md-12" role="alert">
                                         No products found.
                                 </div>
+
+                                <!-- Begin Footer -->
+                                <div class="footer-pagination">
+                                        <div class="row">
+                                                <div class="col-md-6"></div>
+                                                <div class="col-md-6">
+                                                        <div class="row">
+                                                                <div class="col-md-9" style="padding-left: 30%">
+                                                                        <ngb-pagination [(page)] = "thePageNumber"
+                                                                                        [pageSize]="thePageSize"
+                                                                                        [collectionSize]="theTotalElements"
+                                                                                        (pageChange)="listProducts()">
+
+                                                                        </ngb-pagination>
+                                                                </div>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                </div>
+                                <!-- End Footer -->
 
                         </div>
                 </div>
