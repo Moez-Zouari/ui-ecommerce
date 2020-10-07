@@ -1,3 +1,4 @@
+import { CloneVisitor } from '@angular/compiler/src/i18n/i18n_ast';
 import { Component, OnInit } from '@angular/core';
 import { CartItem } from 'src/app/common/cart-item';
 import { CartService } from 'src/app/services/cart.service';
@@ -41,6 +42,14 @@ export class CartDetailsComponent implements OnInit {
 
   incrementQuantity(tehCartItem : CartItem){
     this.cartService.addToCart(tehCartItem);
+  }
+
+  decrementQuantity(theCartItem :CartItem){
+    this.cartService.decrementQuantity(theCartItem);
+  }
+
+  remove(theCartItem : CartItem){
+    this.cartService.remove(theCartItem);
   }
 
 }
