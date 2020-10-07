@@ -48,6 +48,7 @@ export class ProductListComponent implements OnInit {
   }
 //---------------------------------------------------------------------------------
 
+
 //---------------------------------------------------------------------------------
   handleSearchProducts() {
     const theKeyword: string = this.route.snapshot.paramMap.get('keyword');
@@ -118,10 +119,23 @@ export class ProductListComponent implements OnInit {
     }
   }
 //---------------------------------------------------------------------------------
+
+
+//---------------------------------------------------------------------------------
   updatePageSize(pageSize : number) {
     this.thePageSize = pageSize;
     this.thePageNumber = 1 ;
     this.listProducts();
   }
 //---------------------------------------------------------------------------------
+
+
+//---------------------------------------------------------------------------------
+addToCart( theProduct : Product){
+  console.log(`Adding to cart:${theProduct.name},${theProduct.unitPrice}`);
+
+  // TODO .... do the real work
+}
+//---------------------------------------------------------------------------------
+
 }
