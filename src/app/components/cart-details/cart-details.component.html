@@ -23,8 +23,32 @@
 
                         <td>
                             <div class="items">
-                                <label style="font-weight:bold;">Quantity:</label> {{ tempCartItem.quantity}}
+                                <label style="font-weight:bold;">Quantity:</label>
+
+                                <div class="row no-gutters">
+                                    <div class="col">
+                                        <button (click)="incrementQuantity(tempCartItem)" class="btn btn-primary btn-sm">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+
+
+                                    <div class="col ml-4 mr-2">
+                                        {{ tempCartItem.quantity}}
+                                    </div>
+
+                                    <div class="col">
+                                        <button class="btn btn-primary btn-sm">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </div>
+
+                                    <div class="col-8"></div>
+
+                                </div>
+
                             </div>
+
 
                             <p class="mt-2"><label style="font-weight:bold;"> Subtotal : </label>
                                 {{ tempCartItem.quantity * tempCartItem.unitPrice | currency: 'USD' }}</p>
