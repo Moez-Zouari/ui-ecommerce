@@ -30,31 +30,31 @@ export class CartService {
           break;
         }
       }
-        // Check if we found it
-        alreadyExistsInCart = (existingCartItem != undefined);
-
-        if (alreadyExistsInCart) {
-          // Incerement the quantity
-          existingCartItem.quantity++;
-        }
-
-        else {
-          // Just add the item to the array (cart)
-          this.cartItems.push(theCartItem);
-        }
+      // Check if we found it
+      alreadyExistsInCart = (existingCartItem != undefined);
     }
+    if (alreadyExistsInCart) {
+      // Incerement the quantity
+      existingCartItem.quantity++;
+    }
+
+    else {
+      // Just add the item to the array (cart)
+      this.cartItems.push(theCartItem);
+    }
+
 
     // compute cart total price and total quantity
     this.computeCartTotals();
 
   }
-  
-  computeCartTotals() {
-    let totalPriceValue: number =0;
-    let totalQuantityValue: number =0;
 
-    for (let currentCartItem of this.cartItems){
-      totalPriceValue += currentCartItem.quantity * currentCartItem.unitPrice ;
+  computeCartTotals() {
+    let totalPriceValue: number = 0;
+    let totalQuantityValue: number = 0;
+
+    for (let currentCartItem of this.cartItems) {
+      totalPriceValue += currentCartItem.quantity * currentCartItem.unitPrice;
       totalQuantityValue += currentCartItem.quantity;
     }
 
@@ -69,7 +69,7 @@ export class CartService {
 
   logCartData(totalPriceValue: number, totalQuantityValue: number) {
     console.log('Contents of the cart');
-    for (let tempCartItem of this.cartItems){
+    for (let tempCartItem of this.cartItems) {
       const subTotalPrice = tempCartItem.quantity * tempCartItem.unitPrice;
       console.log(`name: ${tempCartItem.name}, quantity=${tempCartItem.quantity}, unitPrice=${tempCartItem.unitPrice}, subTotalPrice=${subTotalPrice}`);
     }
