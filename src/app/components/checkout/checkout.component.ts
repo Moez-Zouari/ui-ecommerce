@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-checkout',
@@ -9,9 +9,9 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class CheckoutComponent implements OnInit {
 
   checkoutFormGroup : FormGroup ;
-
   totalPrice : number = 0;
   totalQuantity: number =0 ;
+
 
   constructor(private formBuilder : FormBuilder) { }
 
@@ -20,9 +20,9 @@ export class CheckoutComponent implements OnInit {
     this.checkoutFormGroup = this.formBuilder.group({
 
       customer: this.formBuilder.group({
-          firstName : [''],
-          lastName : [''],
-          email: ['']
+          firstName : ['',Validators.required],
+          lastName : ['',Validators.required],
+          email: ['',[Validators.required, Validators.email]]
       }),
 
       shippingAddress: this.formBuilder.group({
@@ -51,6 +51,7 @@ export class CheckoutComponent implements OnInit {
   })
     });
   }
+ 
 
   onSubmit(){
     console.log("Handling the submit button");
@@ -69,5 +70,8 @@ export class CheckoutComponent implements OnInit {
     }
 
   }
+
+    
+
 
 }
