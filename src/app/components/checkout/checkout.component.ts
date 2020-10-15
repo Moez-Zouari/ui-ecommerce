@@ -6,6 +6,7 @@ import { State } from 'src/app/common/state';
 import { Luv2ShopFormService } from 'src/app/services/luv2-shop-form.service';
 import { Luv2ShopValidators } from 'src/app/validators/luv2-shop-validators';
 import { CartService } from 'src/app/services/cart.service';
+import { CartItem } from 'src/app/common/cart-item';
 
 
 @Component({
@@ -21,6 +22,7 @@ export class CheckoutComponent implements OnInit {
   shippingAddressStates: State[] = [];
   billingAddressStates: State[] = [];
 
+  cartItems: CartItem[] = [];
   totalPrice: number = 0;
   totalQuantity: number = 0 ;
 
@@ -31,10 +33,12 @@ export class CheckoutComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
     private luv2ShopFormService: Luv2ShopFormService,
+    private cartService : CartService
                     ) { }
 
   ngOnInit(): void {
-
+   
+    this.listCartDetails();
     this.checkoutFormGroup = this.formBuilder.group({
 
       customer: this.formBuilder.group({
@@ -106,7 +110,7 @@ export class CheckoutComponent implements OnInit {
       })
     });
 
-
+    //------------------------------------------------------------------------------------
     // populate credit card months
 
     const startMonth: number = new Date().getMonth() + 1;
@@ -118,8 +122,9 @@ export class CheckoutComponent implements OnInit {
         this.creditCardMonths = data;
       }
     );
+    //------------------------------------------------------------------------------------
 
-    //----------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------
     // populate credit card years
     this.luv2ShopFormService.getCreditCardYears().subscribe(
       data => {
@@ -127,18 +132,18 @@ export class CheckoutComponent implements OnInit {
         this.creditCardYears = data;
       }
     )
+  //----------------------------------------------------------------------------------
 
-    //----------------------------------------------------------------------------------
-    // populate countries 
+  //----------------------------------------------------------------------------------
+  // populate countries 
     this.luv2ShopFormService.getCountries().subscribe(
       data => {
         console.log("Retrieved countries : " + JSON.stringify(data));
         this.countries = data;
       }
     );
-
-
   }
+  //----------------------------------------------------------------------------------
 
   //----------------------------------------------------------------------------------
   onSubmit() {
@@ -183,7 +188,29 @@ export class CheckoutComponent implements OnInit {
      get billingAddressState() { return this.checkoutFormGroup.get('billingAddress.state'); }
      get billingAddressCountry() { return this.checkoutFormGroup.get('billingAddress.country'); }
      get billingAddressZipCode() { return this.checkoutFormGroup.get('billingAddress.zipCode'); }
+     
 
+     //----------------------------------------------------------------------------------
+     listCartDetails() {
+      // get a handle to the cart items
+      this.cartItems = this.cartService.cartItems;
+  
+      // subscribe to the cart totalPrice
+      this.cartService.totalPrice.subscribe(
+        data => this.totalPrice = data 
+      );
+      
+      // subscribe to the cart totalQuantity
+      this.cartService.totalQuantity.subscribe(
+        data => this.totalQuantity = data 
+      );
+      
+      // compute cart total price and quantity
+      this.cartService.computeCartTotals();
+      console.log(`priceeeeeeeeeee ${this.totalPrice}`);
+      console.log(`Qunantityyyyyyy ${this.totalQuantity}`);
+    }
+     
   //----------------------------------------------------------------------------------
   copyShippingAddressToBillingAddress(event) {
     if (event.target.checked) {
@@ -229,7 +256,7 @@ export class CheckoutComponent implements OnInit {
     )
 
   }
-
+  //------------------------------------------------------------------------------------ 
 
   //----------------------------------------------------------------------------------
   getStates(formGroupName: string) {
@@ -254,7 +281,7 @@ export class CheckoutComponent implements OnInit {
       }
     );
   }
-
+ //------------------------------------------------------------------------------------
 
 }
 

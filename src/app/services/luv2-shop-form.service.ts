@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { CartItem } from '../common/cart-item';
 import { Country } from '../common/country';
 import { State } from '../common/state';
 
@@ -13,6 +14,12 @@ export class Luv2ShopFormService {
   private countriesUrl = 'http://localhost:8080/api/countries' ;
   private stateUrl ='http://localhost:8080/api/states' ;
 
+  cartItems: CartItem[] = [];
+
+  totalPrice: Subject<number> = new Subject<number>();
+
+  totalQuantity: Subject<number> = new Subject<number>();
+
   constructor(private httpClient : HttpClient) { }
 
   //------------------------------------------------------------------------------------
@@ -21,9 +28,9 @@ export class Luv2ShopFormService {
     map(response => response._embedded.countries)
   );
   }
+ //------------------------------------------------------------------------------------
 
-
-  //------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
   getStates(theCountryCode: string) : Observable<State[]> {
     //Search URL
     const searchStateUrl =`${this.stateUrl}/search/findByCountryCode?code=${theCountryCode}`;
@@ -32,7 +39,7 @@ export class Luv2ShopFormService {
       map(response => response._embedded.states)
     );
   }
-
+ //------------------------------------------------------------------------------------
 
 
   //------------------------------------------------------------------------------------
@@ -65,7 +72,6 @@ export class Luv2ShopFormService {
     }
     return of(data);
   }
-
 //------------------------------------------------------------------------------------
 }
 //------------------------------------------------------------------------------------
@@ -77,7 +83,7 @@ interface GetResponseCountries {
     countries : Country[];
   }
 }
-
+//------------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------------
 interface GetResponseStates {
@@ -85,3 +91,4 @@ interface GetResponseStates {
     states : State[];
   }
 }
+//------------------------------------------------------------------------------------
