@@ -38,7 +38,8 @@ export class CheckoutComponent implements OnInit {
 
   ngOnInit(): void {
    
-    this.listCartDetails();
+    ///this.listCartDetails();
+    this.reviwCartDetails();
     this.checkoutFormGroup = this.formBuilder.group({
 
       customer: this.formBuilder.group({
@@ -143,6 +144,7 @@ export class CheckoutComponent implements OnInit {
       }
     );
   }
+
   //----------------------------------------------------------------------------------
 
   //----------------------------------------------------------------------------------
@@ -191,7 +193,17 @@ export class CheckoutComponent implements OnInit {
      
 
      //----------------------------------------------------------------------------------
-     listCartDetails() {
+     reviwCartDetails() {
+      // Subscribe to cartService.totalQuantity
+      this.cartService.totalQuantity.subscribe(
+        totalQuantity => this.totalQuantity = totalQuantity
+      );
+      // Subscribe to carService.totalPrice
+      this.cartService.totalPrice.subscribe(
+        totalPrice => this.totalPrice = totalPrice
+        );
+    }
+/*      listCartDetails() {
       // get a handle to the cart items
       this.cartItems = this.cartService.cartItems;
   
@@ -209,7 +221,7 @@ export class CheckoutComponent implements OnInit {
       this.cartService.computeCartTotals();
       console.log(`priceeeeeeeeeee ${this.totalPrice}`);
       console.log(`Qunantityyyyyyy ${this.totalQuantity}`);
-    }
+    } */
      
   //----------------------------------------------------------------------------------
   copyShippingAddressToBillingAddress(event) {
